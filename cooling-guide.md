@@ -115,47 +115,6 @@ Because this script handles hardware parts, Linux normally requires you to type 
 
 ---
 
-## 🔋 Step 2: Boosting the Battery Life (TLP)
-
-To double down on heat management, I installed an advanced power saver called **TLP**. This tool stops your Intel processor from aggressively over-volting itself when you are unplugged from the wall. 
-
-1. Install the tool:
-   ```bash
-   sudo apt install tlp tlp-rdw -y
-   ```
-2. Open its settings file:
-   ```bash
-   sudo nano /etc/tlp.conf
-   ```
-3. Find these lines, remove any `#` symbols at the start of them, and make sure they look exactly like this:
-   ```text
-   # Save power when running on battery
-   CPU_SCALING_GOVERNOR_ON_AC=performance
-   CPU_SCALING_GOVERNOR_ON_BAT=powersave
-
-   # Turn OFF Intel Turbo Boost on battery (Massive heat reduction!)
-   CPU_BOOST_ON_AC=1
-   CPU_BOOST_ON_BAT=0
-   ```
-4. Save the file and start the service:
-   ```bash
-   sudo systemctl enable tlp && sudo tlp start
-   ```
-
----
-
-## 🏆 The Final Verdict
-
-After wrapping up these tweaks, my 2012 MacBook Pro feels completely transformed. 
-
-When I am just writing or browsing light websites, the computer sits at a super chilly **55°C** and stays dead silent. If I open up heavy videos or multitask, the custom script immediately detects it and ramps the fan right up to **3400+ RPM** before the laptop even has a chance to feel hot on my lap. 
-
-Even better, by disabling Intel's aggressive "Turbo Boost" while running on the battery, the laptop draws significantly less power, extending the battery life of this 14-year-old machine by miles. 
-
-If you have an old aluminum MacBook sitting in a drawer, don't throw it out—Linux Mint and a little bit of custom bash scripting can give it a whole second life!
-
----
-
 ## 🛑 Post-Deployment Update[8/25/26]: Fixing the Startup Automation Lock
 
 ### The Discovery
@@ -203,3 +162,44 @@ Core 0   :   +60.0°C
 Core 1   :   +64.0°C
 ```
 The script now ramps up seamlessly under load and scales down to a quiet idle profile automatically, permanently resolving the MacBook’s legacy thermal bottlenecks.
+
+## 🔋 Step 2: Boosting the Battery Life (TLP)
+
+To double down on heat management, I installed an advanced power saver called **TLP**. This tool stops your Intel processor from aggressively over-volting itself when you are unplugged from the wall. 
+
+1. Install the tool:
+   ```bash
+   sudo apt install tlp tlp-rdw -y
+   ```
+2. Open its settings file:
+   ```bash
+   sudo nano /etc/tlp.conf
+   ```
+3. Find these lines, remove any `#` symbols at the start of them, and make sure they look exactly like this:
+   ```text
+   # Save power when running on battery
+   CPU_SCALING_GOVERNOR_ON_AC=performance
+   CPU_SCALING_GOVERNOR_ON_BAT=powersave
+
+   # Turn OFF Intel Turbo Boost on battery (Massive heat reduction!)
+   CPU_BOOST_ON_AC=1
+   CPU_BOOST_ON_BAT=0
+   ```
+4. Save the file and start the service:
+   ```bash
+   sudo systemctl enable tlp && sudo tlp start
+   ```
+
+---
+
+## 🏆 The Final Verdict
+
+After wrapping up these tweaks, my 2012 MacBook Pro feels completely transformed. 
+
+When I am just writing or browsing light websites, the computer sits at a super chilly **55°C** and stays dead silent. If I open up heavy videos or multitask, the custom script immediately detects it and ramps the fan right up to **3400+ RPM** before the laptop even has a chance to feel hot on my lap. 
+
+Even better, by disabling Intel's aggressive "Turbo Boost" while running on the battery, the laptop draws significantly less power, extending the battery life of this 14-year-old machine by miles. 
+
+If you have an old aluminum MacBook sitting in a drawer, don't throw it out—Linux Mint and a little bit of custom bash scripting can give it a whole second life!
+
+---
