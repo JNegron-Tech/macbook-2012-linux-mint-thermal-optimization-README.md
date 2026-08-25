@@ -153,3 +153,53 @@ When I am just writing or browsing light websites, the computer sits at a super 
 Even better, by disabling Intel's aggressive "Turbo Boost" while running on the battery, the laptop draws significantly less power, extending the battery life of this 14-year-old machine by miles. 
 
 If you have an old aluminum MacBook sitting in a drawer, don't throw it out—Linux Mint and a little bit of custom bash scripting can give it a whole second life!
+
+---
+
+## 🛑 Post-Deployment Update[8/25/26]: Fixing the Startup Automation Lock
+
+### The Discovery
+After implementing the custom cooling script and routing it through Linux Mint Cinnamon’s graphical **Startup Applications** tool, I noticed a critical failure during a routine cold boot: the laptop fan sat completely idle at 2000 RPM while CPU temperatures quickly climbed back toward 68°C. The script was simply failing to execute on login.
+
+### The Diagnostic
+Linux Mint's graphical startup applications manager operates strictly within user-space. Because manipulating Apple’s hardware fan registers via `sysfs` requires root administrator privileges, the operating system was silently dropping the script execution request at login. Linux has no secure mechanism to prompt a user for a graphical `sudo` password before the desktop environment fully initializes, effectively leaving the script paralyzed despite the custom `visudo` rule.
+
+### The Engineering Fix: Transitioning to systemd
+To completely decouple hardware cooling from the user login sequence, I stripped the script out of the desktop layer and re-architected it as an official, system-level **systemd background service**. This guarantees the Linux kernel initiates the cooling loops at the deepest layer of the boot architecture before any user interface or login window even appears.
+
+I built a dedicated service configuration unit file at `/etc/systemd/system/mac-cooler.service`:
+
+```ini
+[Unit]
+Description=MacBook Pro 2012 Hardware Thermal Regulation Engine
+After=multi-user.target
+ConditionPathExists=/usr/local/bin/mac-cooler.sh
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/mac-cooler.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+I then force-reloaded the system daemon manager, registered the service to run at boot, and launched it immediately:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable mac-cooler.service
+sudo systemctl start mac-cooler.service
+```
+
+### The Verification
+Executing `sudo systemctl status mac-cooler.service` validated complete success, showing the service as **active (running)** with systemd safely supervising the automated loops. 
+
+Running `sensors` proved the hardware was finally responding dynamically to our custom code without human intervention:
+```text
+Exhaust  :   3411 RPM  (min = 2000 RPM, max = 6200 RPM)
+Core 0   :   +60.0°C
+Core 1   :   +64.0°C
+```
+The script now ramps up seamlessly under load and scales down to a quiet idle profile automatically, permanently resolving the MacBook’s legacy thermal bottlenecks.
