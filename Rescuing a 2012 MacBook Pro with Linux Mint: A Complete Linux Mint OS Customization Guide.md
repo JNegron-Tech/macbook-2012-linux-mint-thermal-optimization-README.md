@@ -13,7 +13,7 @@ To give you an immediate look at what clean open-source themes can do, here is t
 ### 🔄 The Starting Point (Stock Linux Mint)
 When you first install Linux Mint, it defaults to a traditional PC layout. It features a heavy, dark taskbar at the bottom of the screen, application tabs cluttering the panel, and window control buttons sitting on the far right. 
 <!-- PLACE YOUR BEFORE SCREENSHOT HERE -->
-![Stock Linux Mint Home Screen](before-screenshot.png)
+![Stock Linux Mint Home Screen](before-screenshot.jpg)
 
 ### 🍏 The End Result (Project Lazarus Workspace)
 After injecting the customized configuration files, the workspace completely transforms. The screen features a transparent, frosted-glass menu bar shifted to the very top, a responsive floating application dock sitting at the baseline with smooth icon-zooming effects, and high-definition Apple-style iconography.
