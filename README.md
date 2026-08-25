@@ -37,6 +37,5 @@ My upcoming pipeline for this repository includes:
 *   **Premium GTK Window & Icon Themes:** Injecting native Apple visual styles, window drop-shadows, and proper window control button placement (moving close/minimize/maximize to the left side).
 *   **Apple Keyboard Remapping:** Tweaking the system's key-bindings so the standard Apple `Command` key shortcuts (`Cmd+C`, `Cmd+V`, `Cmd+Space` for search) work natively inside the Linux environment.
 *   **Maximizing Hardware Capacities:** Installing physical 8GB x 2 RAM modules to max out the motherboard limits at 16GB for effortless multitasking.
-
-*   **[Read the Full Technical Guide & Case Study](GUIDE.md)**: A detailed breakdown of system permissions, custom cooling scripts, and systemd automation.
-*   **[Explore the Visual Design Showcase](DESIGN.md)**: A step-by-step styling guide featuring Before and After screenshots of the macOS transformation.
+*   [**Read the Full Technical Guide & Case Study**](cooling-guide.md): A detailed breakdown of system permissions, custom cooling scripts, and systemd automation.
+*   [**Explore the Visual Design Showcase**](design-guide.md): A step-by-step styling guide featuring Before and After screenshots of the macOS transformation.
