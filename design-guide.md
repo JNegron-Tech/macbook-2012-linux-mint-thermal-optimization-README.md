@@ -43,10 +43,11 @@ To wrap everything together, I deployed the community-favorite `WhiteSur` design
 I automated the file downloads and folder placements cleanly via the terminal:
 ```bash
 mkdir -p ~/.icons && cd ~/.icons
-curl -L -o whitesur-icons.tar.xz https://github.com
-tar -xf whitesur-icons.tar.xz
-mv WhiteSur-icon-theme-2024-05-01/src/* ./
-rm -rf WhiteSur-icon-theme-2024-05-01 whitesur-icons.tar.xz
+rm -rf WhiteSur-icon-theme
+git clone --depth 1 https://github.com/vinceliuice/WhiteSur-icon-theme
+mv WhiteSur-icon-theme/src/* ./
+rm -rf WhiteSur-icon-theme
+
 ```
 
 Finally, I opened **System Settings -> Themes** and toggled every single display category (Window borders, Icons, Controls, and Desktop) over to **WhiteSur-dark** to lock in a seamless system-wide Dark Mode.
